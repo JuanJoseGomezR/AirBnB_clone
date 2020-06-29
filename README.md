@@ -70,19 +70,19 @@ EOF  help  quit
 | Destroy | Destroy specified object | destroy class |
 
 ---
-## Usage EOF
+## Usage EOF:
 With the EOF command, you exit the console.
 ```sh
 (hbnb)EOF
 vagrant@vagrant-ubuntu-trusty-64:~/AirBnB_clone$
 ```
-## Usage Quit
+## Usage Quit:
 With the quit command, you exit the console.
 ```sh
 (hbnb)quit
 vagrant@vagrant-ubuntu-trusty-64:~/AirBnB_clone$
 ```
-## Usage Create
+## Usage Create:
 With the create command, a new instance of BaseModel is created and it is save to the JSON file, then it prints the instance id.
 ```sh
 (hbnb) create BaseModel
