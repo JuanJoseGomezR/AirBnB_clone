@@ -36,6 +36,26 @@ Quit command to exit the program
 (hbnb) quit
 PROMPT~>
 ```
+Non-interactive Mode:
+1. Run the following command: echo "help" | ./console.py
+```sh
+(hbnb)
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb) 
+$
+$ cat test_help
+help
+$
+$ cat test_help | ./console.py
+(hbnb)
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb)
+```
 ---
 ## CMD Commands
 
