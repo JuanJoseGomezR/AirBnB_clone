@@ -18,11 +18,11 @@ from models.engine.file_storage import FileStorage
 
 class HBNBCommand(cmd.Cmd):
     """command processor"""
-    
+
     prompt = "(hbnb)"
-    
+
     classes = ["BaseModel", "State", "City",
-                  "Amenity", "Review", "Place", "User"]
+               "Amenity", "Review", "Place", "User"]
 
     def do_create(self, line):
         """create command"""
@@ -56,11 +56,11 @@ class HBNBCommand(cmd.Cmd):
             return
         line = line.split()
         if line[0] not in self.classes:
-           print("** class doesn't exist **")
-           return
+            print("** class doesn't exist **")
+            return
         if len(line) == 1:
-           print("** instance id missing **")
-           return
+            print("** instance id missing **")
+            return
         stor_obj = storage.all()
         if len(line) >= 1:
             for obj_d in stor_obj.keys():
@@ -75,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, line):
         """end of file"""
         return True
-    
+
     def do_quit(self, line):
         """exit command"""
         return True
@@ -96,8 +96,7 @@ class HBNBCommand(cmd.Cmd):
         obj_del = "{}.{}" .format(line[0], line[1])
         if obj_del in stor_obj:
             del(stor_obj[obj_del])
-            storage.save()        
-        
+            storage.save()
 
     def do_all(self, line):
         """self command"""
@@ -112,8 +111,7 @@ class HBNBCommand(cmd.Cmd):
                     continue
             obj.append(str(stor_obj[obj_id]))
         print(obj)
-    
-    
+
     def do_update(self, line):
         """update command"""
         n = line.split()
