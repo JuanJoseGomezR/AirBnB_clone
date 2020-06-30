@@ -2,6 +2,7 @@
 """test for place"""
 import unittest
 import os
+import pep8
 from models.place import Place
 from models.base_model import BaseModel
 
