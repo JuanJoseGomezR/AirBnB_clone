@@ -23,7 +23,7 @@ class test_filestore(unittest.TestCase):
 
     @classmethod
     def tearDown(self):
-        del self.review
+        del self.review()
         try:
             os.remove("file.json")
         except FileNotFoundError:

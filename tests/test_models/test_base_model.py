@@ -16,10 +16,10 @@ class test_base_model(unittest.TestCase):
             os.remove("file.json")
         except FileNotFoundError:
             pass
-    
+
     def test_init(self):
         self.assertTrue(isinstance(self.base, BaseModel))
-    
+
     def test_atritt(self):
         self.assertTrue(hasattr(BaseModel, "__init__"))
         self.assertTrue(hasattr(BaseModel, "to_dict"))
