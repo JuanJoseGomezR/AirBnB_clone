@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 """Unittest User"""
-
-
 import unittest
 import os
 from models.base_model import BaseModel
@@ -59,5 +57,5 @@ class test_filestore(unittest.TestCase):
                 self.assertEqual(n, "{}")
         self.assertIs(file3.reload(), None)
 
-if __name__ = "__main__":
+if __name__ == "__main__":
     unittest.main()
