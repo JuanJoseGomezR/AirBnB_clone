@@ -138,22 +138,22 @@ class HBNBCommand(cmd.Cmd):
                 raise ValueError()
             v = objects[key]
             try:
-                v.dict[my_list[2]] = eval(my_list[3])
+                v.__dict__[my_list[2]] = eval(my_list[3])
             except Exception:
-                v.dict[my_list[2]] = my_list[3]
+                v.__dict__[my_list[2]] = my_list[3]
                 v.save()
         except SyntaxError:
-            print(" class name missing ")
+            print("** class name missing **")
         except NameError:
-            print(" class doesn't exist ")
+            print("** class doesn't exist **")
         except IndexError:
-            print(" instance id missing ")
+            print("** instance id missing **")
         except KeyError:
-            print(" no instance found ")
+            print("** no instance found **")
         except AttributeError:
-            print(" attribute name missing ")
+            print("** attribute name missing **")
         except ValueError:
-            print(" value missing ")
+            print("** value missing **")
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
