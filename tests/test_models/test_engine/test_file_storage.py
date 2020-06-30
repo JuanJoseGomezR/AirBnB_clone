@@ -34,9 +34,9 @@ class test_filestore(unittest.TestCase):
     def test_new(self):
         file1 = FileStorage()
         inst_dic = file1.all()
-        tidus = User()
-        tidus.id = 999999
-        tidus.name = "Arepa"
+        Arepa = User()
+        Arepa.id = 999999
+        Arepa.name = "Arepa"
         file1.new(Arepa)
         key = tidu.__class__.__name__ + "." + str(Arepa.id)
         self.assertIsNotNone(inst_dic[key])
