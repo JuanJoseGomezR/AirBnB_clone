@@ -16,6 +16,9 @@ class FileStorage:
     JSON file to instances """
     __file_path = "file.json"
     __objects = {}
+    classes_we = {"BaseModel": BaseModel, "State": State, "City": City,
+                  "Amenity": Amenity, "Review": Review,
+                  "Place": Place, "User": User}
 
     def all(self):
         """ returns the dictionary __objects

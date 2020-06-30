@@ -19,7 +19,7 @@ from models.engine.file_storage import FileStorage
 class HBNBCommand(cmd.Cmd):
     """command processor"""
 
-    prompt = "(hbnb)"
+    prompt = "(hbnb) "
 
     classes = ["BaseModel", "State", "City",
                "Amenity", "Review", "Place", "User"]
@@ -78,10 +78,12 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, line):
         """end of file"""
+        print()
         return True
 
     def do_quit(self, line):
-        """exit command"""
+        """Quit command to exit the program
+        """
         return True
 
     def do_destroy(self, line):
