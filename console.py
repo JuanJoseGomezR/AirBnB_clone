@@ -72,6 +72,10 @@ class HBNBCommand(cmd.Cmd):
                 return
         print("** no instance found **")
 
+    def emptyline(self):
+        """ Empty File """
+        pass
+
     def do_EOF(self, line):
         """end of file"""
         return True
