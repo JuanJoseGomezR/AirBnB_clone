@@ -75,7 +75,7 @@ class HBNBCommand(cmd.Cmd):
 
     def emptyline(self):
         """ Empty File """
-        pass
+        return
 
     def do_EOF(self, line):
         """end of file"""
