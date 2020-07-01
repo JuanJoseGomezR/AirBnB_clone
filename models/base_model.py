@@ -33,9 +33,6 @@ class BaseModel:
         mssg = "[{0}] ({1}) {2}".format(class_name, self.id, self.__dict__)
         return (mssg)
 
-    def help_add(self):
-        print('add two integral numbers')
-
     def save(self):
         """ updates the public instance attribute updated_at with
         the current datetime
