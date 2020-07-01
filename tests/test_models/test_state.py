@@ -7,7 +7,6 @@ from models.base_model import BaseModel
 import pep8
 
 
-
 class TestState(unittest.TestCase):
     """this will test the State class"""
 
