@@ -123,7 +123,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             if not line:
                 raise SyntaxError()
-            #my_list = line.split()
+            # my_list = line.split()
             my_list = shlex.split(line)
             if my_list[0] not in self.classes:
                 raise NameError()
