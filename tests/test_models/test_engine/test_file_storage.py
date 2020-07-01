@@ -1,61 +1,51 @@
 #!/usr/bin/python3
-"""Unittest User"""
+""" Unittest for file storage """
 import unittest
 import os
 from models.base_model import BaseModel
-from models.user import User
-from models.state import State
-from models.city import City
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
-from models.engine.file_storage import FileStorage
+import pep8
 
 
-class test_filestore(unittest.TestCase):
-    """test file_storage"""
-    @classmethod
-    def setup(self):
-        self.review = Review()
-        self.review.user_id = "Arepa"
-        self.review.place_id = "Baño"
-        self.review.text = "Arepa va al baño"
+class TestBaseModel(unittest.TestCase):
+    """this will test the base model class"""
 
     @classmethod
+    def setUpClass(cls):
+        """setup for the test"""
+        cls.base = BaseModel()
+        cls.base.name = "Juan"
+        cls.base.num = 18
+
+    @classmethod
+    def teardown(cls):
+        del cls.base
+
     def tearDown(self):
-        del self.review()
+        """ tear down test """
         try:
             os.remove("file.json")
-        except FileNotFoundError:
+        except Exception:
             pass
 
-    def test_new(self):
-        file1 = FileStorage()
-        inst_dic = file1.all()
-        Arepa = User()
-        Arepa.id = 999999
-        Arepa.name = "Arepa"
-        file1.new(Arepa)
-        key = tidu.__class__.__name__ + "." + str(Arepa.id)
-        self.assertIsNotNone(inst_dic[key])
+    def test_pep8_BaseModel(self):
+        """ pep8 test """
+        style = pep8.StyleGuide(quiet=True)
+        p = style.check_files(['models/base_model.py'])
+        self.assertEqual(p.total_errors, 0, "fix pep8")
 
-    def test_all(self):
-        file2 = FileStorage()
-        instances_dic = file2.all()
-        self.assertIsNotNone(inst_dic)
-        self.assertEqual(type(inst_dic), dict)
-        self.assertIs(inst_dic, file2._FileStorage__objects)
+    def test_method_BaseModel(self):
+        """ method test """
+        self.assertTrue(hasattr(BaseModel, "save"))
+        self.assertTrue(hasattr(BaseModel, "to_dict"))
 
-    def test_reload(self):
-        file3 = FileStorage()
-        try:
-            os.remove("file.json")
-        except:
-            pass
-        with open("file.json", mode="w") as f:
-            for n in r:
-                self.assertEqual(n, "{}")
-        self.assertIs(file3.reload(), None)
+    def test_init_BaseModel(self):
+        """ init test """
+        self.assertTrue(isinstance(self.base, BaseModel))
+
+    def test_save_BaesModel(self):
+        """ save test """
+        self.base.save()
+        self.assertNotEqual(self.base.created_at, self.base.updated_at)
 
 if __name__ == "__main__":
     unittest.main()

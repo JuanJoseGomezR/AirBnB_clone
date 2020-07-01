@@ -8,9 +8,11 @@ from models.base_model import BaseModel
 class test_base_model(unittest.TestCase):
 
     def setUp(self):
+        """ setup test """
         self.base = BaseModel()
 
     def tearDown(self):
+        """ teardown test """
         del self.base
         try:
             os.remove("file.json")
@@ -18,14 +20,17 @@ class test_base_model(unittest.TestCase):
             pass
 
     def test_init(self):
+        """ init test """
         self.assertTrue(isinstance(self.base, BaseModel))
 
     def test_atritt(self):
+        """ atritt test """
         self.assertTrue(hasattr(BaseModel, "__init__"))
         self.assertTrue(hasattr(BaseModel, "to_dict"))
         self.assertTrue(hasattr(BaseModel, "save"))
 
     def test_to_dict(self):
+        """ test to dict """
         base = BaseModel()
         base.name = "Holberton"
         base.age = 89
@@ -38,6 +43,7 @@ class test_base_model(unittest.TestCase):
         self.assertEqual(convert["__class__"], type(base).__name__)
 
     def tets_save(self):
+        """ save test """
         self.base.save()
         self.assertNotEqual(self.base.created_at, self.base.updated_at)
 
