@@ -2,7 +2,7 @@
 """Console for HBNB
 """
 
-
+import shlex
 import cmd
 import json
 from models import storage
@@ -123,7 +123,8 @@ class HBNBCommand(cmd.Cmd):
         try:
             if not line:
                 raise SyntaxError()
-            my_list = line.split()
+            #my_list = line.split()
+            my_list = shlex.split(line)
             if my_list[0] not in self.classes:
                 raise NameError()
             if len(my_list) < 2:
@@ -137,11 +138,17 @@ class HBNBCommand(cmd.Cmd):
             if len(my_list) < 4:
                 raise ValueError()
             v = objects[key]
-            try:
-                v.__dict__[my_list[2]] = eval(my_list[3])
-            except Exception:
-                v.__dict__[my_list[2]] = my_list[3]
+            if my_list[2] in v.__dict__:
+                t = type(v.__dict__[my_list[2]])
+                v.__dict__[my_list[2]] = t(my_list[3])
                 v.save()
+            else:
+                try:
+                    v.__dict__[my_list[2]] = eval(my_list[3])
+                    v.save()
+                except Exception:
+                    v.__dict__[my_list[2]] = my_list[3]
+                    v.save()
         except SyntaxError:
             print("** class name missing **")
         except NameError:
