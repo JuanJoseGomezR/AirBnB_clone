@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Console for HBNB
+"""
+Console for HBNB
 """
 
 import shlex
@@ -76,10 +77,10 @@ class HBNBCommand(cmd.Cmd):
                 return
         print("** no instance found **")
 
-    def emptyline(self):
-        """Empty File
-        """
-        return
+    # def emptyline(self):
+    #     """Empty File
+    #     """
+    #     return
 
     def do_EOF(self, line):
         """end of file
