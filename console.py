@@ -51,10 +51,11 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, line):
         """show command"""
-        if line is None:
+        line = line.split()
+        if len(line) == 0:
             print("** class name missing **")
             return
-        line = line.split()
+        # line = line.split()
         if line[0] not in self.classes:
             print("** class doesn't exist **")
             return
