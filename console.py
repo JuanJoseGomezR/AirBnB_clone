@@ -48,6 +48,7 @@ class HBNBCommand(cmd.Cmd):
             new_obj = Place()
         elif line == self.classes[6]:
             new_obj = User()
+        new_obj = eval(line + "()")
         new_obj.save()
         print(new_obj.id)
 
