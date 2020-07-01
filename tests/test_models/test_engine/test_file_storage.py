@@ -18,6 +18,7 @@ class TestBaseModel(unittest.TestCase):
 
     @classmethod
     def teardown(cls):
+        """tear down"""
         del cls.base
 
     def tearDown(self):
