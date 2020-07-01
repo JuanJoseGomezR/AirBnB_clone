@@ -17,7 +17,8 @@ from models.engine.file_storage import FileStorage
 
 
 class HBNBCommand(cmd.Cmd):
-    """command processor"""
+    """command processor
+    """
 
     prompt = "(hbnb) "
 
@@ -25,7 +26,8 @@ class HBNBCommand(cmd.Cmd):
                "Amenity", "Review", "Place", "User"]
 
     def do_create(self, line):
-        """create command"""
+        """create command
+        """
         if len(line) == 0:
             print("** class name missing **")
             return
@@ -50,7 +52,8 @@ class HBNBCommand(cmd.Cmd):
         print(new_obj.id)
 
     def do_show(self, line):
-        """show command"""
+        """show command
+        """
         line = line.split()
         if len(line) == 0:
             print("** class name missing **")
@@ -74,11 +77,13 @@ class HBNBCommand(cmd.Cmd):
         print("** no instance found **")
 
     def emptyline(self):
-        """ Empty File """
+        """Empty File
+        """
         return
 
     def do_EOF(self, line):
-        """end of file"""
+        """end of file
+        """
         return True
 
     def do_quit(self, line):
@@ -87,7 +92,8 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_destroy(self, line):
-        """destroy command"""
+        """destroy command
+        """
         if len(line) == 0:
             print("** class name missing **")
             return
@@ -105,7 +111,8 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_all(self, line):
-        """self command"""
+        """self command
+        """
         if line not in self.classes and len(line) > 0:
             print("** class doesn't exist **")
             return
@@ -119,7 +126,8 @@ class HBNBCommand(cmd.Cmd):
         print(obj)
 
     def do_update(self, line):
-        """update command"""
+        """update command
+        """
         try:
             if not line:
                 raise SyntaxError()
