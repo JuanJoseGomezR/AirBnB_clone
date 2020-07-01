@@ -79,7 +79,6 @@ class HBNBCommand(cmd.Cmd):
 
     def do_EOF(self, line):
         """end of file"""
-        print()
         return True
 
     def do_quit(self, line):
