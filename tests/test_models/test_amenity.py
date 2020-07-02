@@ -1,94 +1,124 @@
+#!/usr/bin/python3
+"""
+test module for testing amenity models
+"""
+
+import datetime
 import unittest
-import pep8
+from models.base_model import BaseModel
 from models.amenity import Amenity
-import os
-from datetime import datetime
 
 
-def setUpModule():
-    pass
-
-
-def tearDownModule():
-    pass
-
-
-class TestStringMethods(unittest.TestCase):
-    def testpep8(self):
-        style = pep8.StyleGuide(quiet=True)
-        file1 = "models/amenity.py"
-        file2 = "tests/test_models/test_amenity.py"
-        check = style.check_files([file1, file2])
-        self.assertNotEqual(check.total_errors, 0,
-                         "Found code style errors (and warning).")
-
-
-class TestBaseClass(unittest.TestCase):
+class TestAmenityModel(unittest.TestCase):
+    """test class for testing amenity models
     """
-    Setupclass
-    #Test id
-    #Test name
-    """
-
     def setUp(self):
-        self.juan = Amenity()
-        self.juan.name = "Holberton"
-        self.juan.juanito = ""
-        self.this_id = self.juan.id
+        self.temp_b = Amenity()
 
     def tearDown(self):
-        pass
+        self.temp_b = None
 
-    def test_name(self):
-        self.assertEqual(self.juan.name, "Holberton")
+    def test_type(self):
+        """test method for type testing of amenity  model
+        """
+        self.assertIsInstance(self.temp_b, Amenity)
+        self.assertEqual(type(self.temp_b), Amenity)
+        self.assertEqual(issubclass(self.temp_b.__class__, BaseModel), True)
+        self.assertEqual(isinstance(self.temp_b, BaseModel), True)
 
-    def test_id(self):
-        self.assertEqual(self.this_id, self.juan.id)
+    def test_name_type(self):
+        """tests the name type of class attribute
+        """
+        self.assertEqual(type(Amenity.name), str)
 
-    def test_not_existing(self):
-        self.assertNotEqual(self.juan.juanito, "no existe")
+    def test_basic_attribute_set(self):
+        """test method for basic attribute assignment
+        """
+        self.temp_b.name = "bennett"
+        self.temp_b.xyz = 400
+        self.assertEqual(self.temp_b.name, "bennett")
+        self.assertEqual(self.temp_b.xyz, 400)
 
-    def test_instance(self):
-        self.assertIsInstance(self.juan, Amenity)
+    def test_string_return(self):
+        """tests the string method to make sure it returns
+            the proper string
+        """
+        my_str = str(self.temp_b)
+        id_test = "[{}] ({})".format(self.temp_b.__class__.__name__,
+                                     self.temp_b.id)
+        boolean = id_test in my_str
+        self.assertEqual(True, boolean)
+        boolean = "updated_at" in my_str
+        self.assertEqual(True, boolean)
+        boolean = "created_at" in my_str
+        self.assertEqual(True, boolean)
+        boolean = "datetime.datetime" in my_str
+        self.assertEqual(True, boolean)
 
-    def test_create_file(self):
-        self.juan.save()
-        self.assertTrue(os.path.isfile("file.json"))
-        self.assertTrue(hasattr(self.juan, "save"))
-        self.assertTrue(hasattr(self.juan, "__init__"))
-        self.assertTrue(hasattr(self.juan, "to_dict"))
-        self.assertTrue(hasattr(self.juan, "__str__"))
+    def test_to_dict(self):
+        """tests the to_dict method to make sure properly working
+        """
+        my_dict = self.temp_b.to_dict()
+        self.assertEqual(str, type(my_dict['created_at']))
+        self.assertEqual(my_dict['created_at'],
+                         self.temp_b.created_at.isoformat())
+        self.assertEqual(datetime.datetime, type(self.temp_b.created_at))
+        self.assertEqual(my_dict['__class__'],
+                         self.temp_b.__class__.__name__)
+        self.assertEqual(my_dict['id'], self.temp_b.id)
 
-    def test_save(self):
-        juani2 = self.juan.updated_at
-        self.juan.save()
-        self.assertIsInstance(self.juan.updated_at, datetime)
-        self.assertTrue(self.juan.updated_at != juani2)
+    def test_to_dict_more(self):
+        """tests more things with to_dict method
+        """
+        my_dict = self.temp_b.to_dict()
+        created_at = my_dict['created_at']
+        time = datetime.datetime.strptime(created_at, "%Y-%m-%dT%H:%M:%S.%f")
+        self.assertEqual(self.temp_b.created_at, time)
 
-    def test_dict(self):
-        juanito2 = self.juan.to_dict()
-        self.assertEqual(self.juan.__class__.__name__, "Amenity")
-        self.assertIsInstance(juanito2["updated_at"], str)
-        self.assertIsInstance(juanito2["id"], str)
-        self.assertIsInstance(juanito2["created_at"], str)
+    def test_from_dict_basic(self):
+        """tests the from_dict method
+        """
+        my_dict = self.temp_b.to_dict()
+        my_base = self.temp_b.__class__(**my_dict)
+        self.assertEqual(my_base.id, self.temp_b.id)
+        self.assertEqual(my_base.updated_at, self.temp_b.updated_at)
+        self.assertEqual(my_base.created_at, self.temp_b.created_at)
+        self.assertEqual(my_base.__class__.__name__,
+                         self.temp_b.__class__.__name__)
 
+    def test_from_dict_hard(self):
+        """test for the from_dict method for class objects
+        """
+        self.temp_b.random = "hello!"
+        self.temp_b.z = 55
+        my_dict = self.temp_b.to_dict()
+        self.assertEqual(my_dict['z'], 55)
+        my_base = self.temp_b.__class__(**my_dict)
+        self.assertEqual(my_base.z, self.temp_b.z)
+        self.assertEqual(my_base.random, self.temp_b.random)
+        self.assertEqual(my_base.created_at, self.temp_b.created_at)
 
-class TestFib(unittest.TestCase):
+    def test_unique_id(self):
+        """test for unique ids for class objects
+        """
+        another = self.temp_b.__class__()
+        another2 = self.temp_b.__class__()
+        self.assertNotEqual(self.temp_b.id, another.id)
+        self.assertNotEqual(self.temp_b.id, another2.id)
 
-    def setUp(self):
-        pass
+    def test_id_type_string(self):
+        """test id of the class is a string
+        """
+        self.assertEqual(type(self.temp_b.id), str)
 
-    def tearDown(self):
-        pass
-
-    @classmethod
-    def setUpClass(cls):
-        pass
-
-    @classmethod
-    def tearDownClass(cls):
-        pass
-
+    def test_updated_time(self):
+        """test that updated time gets updated
+        """
+        time1 = self.temp_b.updated_at
+        self.temp_b.save()
+        time2 = self.temp_b.updated_at
+        self.assertNotEqual(time1, time2)
+        self.assertEqual(type(time1), datetime.datetime)
 
 if __name__ == '__main__':
     unittest.main()
