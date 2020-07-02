@@ -1,73 +1,111 @@
-#!/usr/bin/python3
-"""test for review"""
 import unittest
-import os
-from models.review import Review
-from models.base_model import BaseModel
 import pep8
+from models.review import Review
+import os
+from datetime import datetime
 
 
-class TestReview(unittest.TestCase):
-    """this will test the place class"""
+def setUpModule():
+    pass
+
+
+def tearDownModule():
+    pass
+
+
+class TestStringMethods(unittest.TestCase):
+    def testpep8(self):
+        style = pep8.StyleGuide(quiet=True)
+        file1 = "models/review.py"
+        file2 = "tests/test_models/test_review.py"
+        check = style.check_files([file1, file2])
+        self.assertEqual(check.total_errors, 0,
+                         "Found code style errors (and warning).")
+
+
+class TestBaseClass(unittest.TestCase):
+    """
+    Setupclass
+    #Test id
+    #Test name
+    """
+
+    def setUp(self):
+        self.juan = Review()
+        self.juan.place_id = "place.12"
+        self.juan.user_id = "juanito"
+        self.juan.text = "holi"
+        self.juan.juanito = ""
+        self.this_id = self.juan.id
+        self.this_created = self.juan.created_at
+        self.this_updated = self.juan.updated_at
+
+    def tearDown(self):
+        pass
+
+    def test_text(self):
+        self.assertEqual(self.juan.text, "holi")
+
+    def test_user_id(self):
+        self.assertEqual(self.juan.user_id, "juanito")
+
+    def test_place_id(self):
+        self.assertEqual(self.juan.place_id, "place.12")
+
+    def test_id(self):
+        self.assertEqual(self.this_id, self.juan.id)
+
+    def test_created(self):
+        self.assertEqual(self.this_created, self.juan.created_at)
+
+    def test_updated(self):
+        self.assertEqual(self.this_updated, self.juan.updated_at)
+
+    def test_not_existing(self):
+        self.assertNotEqual(self.juan.juanito, "no existe")
+
+    def test_instance(self):
+        self.assertIsInstance(self.juan, Review)
+
+    def test_create_file(self):
+        self.juan.save()
+        self.assertTrue(os.path.isfile("file.json"))
+        self.assertTrue(hasattr(self.juan, "save"))
+        self.assertTrue(hasattr(self.juan, "__init__"))
+        self.assertTrue(hasattr(self.juan, "to_dict"))
+        self.assertTrue(hasattr(self.juan, "__str__"))
+
+    def test_save(self):
+        juani2 = self.juan.updated_at
+        self.juan.save()
+        self.assertIsInstance(self.juan.updated_at, datetime)
+        self.assertTrue(self.juan.updated_at != juani2)
+
+    def test_dict(self):
+        juanito2 = self.juan.to_dict()
+        self.assertEqual(self.juan.__class__.__name__, "Review")
+        self.assertIsInstance(juanito2["updated_at"], str)
+        self.assertIsInstance(juanito2["id"], str)
+        self.assertIsInstance(juanito2["created_at"], str)
+        self.assertIsInstance(juanito2["user_id"], str)
+
+
+class TestFib(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
 
     @classmethod
     def setUpClass(cls):
-        """set up for test"""
-        cls.rev = Review()
-        cls.rev.place_id = "4321-dcba"
-        cls.rev.user_id = "123-bca"
-        cls.rev.text = "algo xd"
+        pass
 
     @classmethod
-    def teardown(cls):
-        """at the end of the test this will tear it down"""
-        del cls.rev
-
-    def tearDown(self):
-        """teardown"""
-        try:
-            os.remove("file.json")
-        except Exception:
-            pass
-
-    def test_pep8_Review(self):
-        """Tests pep8 style"""
-        style = pep8.StyleGuide(quiet=True)
-        p = style.check_files(['models/review.py'])
-        self.assertEqual(p.total_errors, 0, "fix pep8")
-
-    def test_checking_for_docstring_Review(self):
-        """checking for docstrings"""
-        self.assertIsNotNone(Review.__doc__)
-
-    def test_attributes_review(self):
-        """chekcing if review have attributes"""
-        self.assertTrue('id' in self.rev.__dict__)
-        self.assertTrue('created_at' in self.rev.__dict__)
-        self.assertTrue('updated_at' in self.rev.__dict__)
-        self.assertTrue('place_id' in self.rev.__dict__)
-        self.assertTrue('text' in self.rev.__dict__)
-        self.assertTrue('user_id' in self.rev.__dict__)
-
-    def test_is_subclass_Review(self):
-        """test if review is subclass of BaseModel"""
-        self.assertTrue(issubclass(self.rev.__class__, BaseModel), True)
-
-    def test_attribute_types_Review(self):
-        """test attribute type for Review"""
-        self.assertEqual(type(self.rev.text), str)
-        self.assertEqual(type(self.rev.place_id), str)
-        self.assertEqual(type(self.rev.user_id), str)
-
-    def test_save_Review(self):
-        """test if the save works"""
-        self.rev.save()
-        self.assertNotEqual(self.rev.created_at, self.rev.updated_at)
-
-    def test_to_dict_Review(self):
-        """test if dictionary works"""
-        self.assertEqual('to_dict' in dir(self.rev), True)
+    def tearDownClass(cls):
+        pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

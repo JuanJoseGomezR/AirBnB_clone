@@ -1,97 +1,128 @@
-#!/usr/bin/python3
-"""test for place"""
 import unittest
-import os
 import pep8
 from models.place import Place
-from models.base_model import BaseModel
+import os
+from datetime import datetime
 
 
-class TestPlace(unittest.TestCase):
-    """this will test the place class"""
+def setUpModule():
+    pass
+
+
+def tearDownModule():
+    pass
+
+
+class TestStringMethods(unittest.TestCase):
+    def testpep8(self):
+        style = pep8.StyleGuide(quiet=True)
+        file1 = "models/place.py"
+        file2 = "tests/test_models/test_place.py"
+        check = style.check_files([file1, file2])
+        self.assertEqual(check.total_errors, 0,
+                         "Found code style errors (and warning).")
+
+
+class TestBaseClass(unittest.TestCase):
+    """
+    Setupclass
+    #Test id
+    #Test name
+    """
+
+    def setUp(self):
+        self.juan = Place()
+        self.juan.name = "Holberton"
+        self.juan.city_id = "City.12"
+        self.juan.user_id = "User.12"
+        self.juan.description = "juanito"
+        self.juan.number_rooms = 12
+        self.juan.number_bathrooms = 12
+        self.juan.max_guest = 12
+        self.juan.price_by_night = 12
+        self.juan.latitude = 12.12
+        self.juan.longitude = 12.12
+        self.juan.amenity_ids = ["hola", "juanito"]
+        self.juan.juanito = ""
+        self.this_id = self.juan.id
+        self.this_created = self.juan.created_at
+        self.this_updated = self.juan.updated_at
+
+    def tearDown(self):
+        pass
+
+    def test_name(self):
+        self.assertEqual(self.juan.name, "Holberton")
+
+    def test_number(self):
+        self.assertEqual(self.juan.number_rooms, 12)
+        self.assertEqual(self.juan.number_bathrooms, 12)
+        self.assertEqual(self.juan.max_guest, 12)
+        self.assertEqual(self.juan.price_by_night, 12)
+        self.assertEqual(self.juan.latitude, 12.12)
+        self.assertEqual(self.juan.longitude, 12.12)
+        self.assertEqual(self.juan.number_rooms, 12)
+
+    def test_id(self):
+        self.assertEqual(self.juan.amenity_ids, ["hola", "juanito"])
+        self.assertEqual(self.juan.city_id, "City.12")
+        self.assertEqual(self.juan.user_id, "User.12")
+
+    def test_Array(self):
+        self.assertEqual(self.this_id, self.juan.id)
+
+    def test_created(self):
+        self.assertEqual(self.this_created, self.juan.created_at)
+
+    def test_updated(self):
+        self.assertEqual(self.this_updated, self.juan.updated_at)
+
+    def test_not_existing(self):
+        self.assertNotEqual(self.juan.juanito, "no existe")
+
+    def test_instance(self):
+        self.assertIsInstance(self.juan, Place)
+
+    def test_create_file(self):
+        self.juan.save()
+        self.assertTrue(os.path.isfile("file.json"))
+        self.assertTrue(hasattr(self.juan, "save"))
+        self.assertTrue(hasattr(self.juan, "__init__"))
+        self.assertTrue(hasattr(self.juan, "to_dict"))
+        self.assertTrue(hasattr(self.juan, "__str__"))
+
+    def test_save(self):
+        juani2 = self.juan.updated_at
+        self.juan.save()
+        self.assertIsInstance(self.juan.updated_at, datetime)
+        self.assertTrue(self.juan.updated_at != juani2)
+
+    def test_dict(self):
+        juanito2 = self.juan.to_dict()
+        self.assertEqual(self.juan.__class__.__name__, "Place")
+        self.assertIsInstance(juanito2["updated_at"], str)
+        self.assertIsInstance(juanito2["id"], str)
+        self.assertIsInstance(juanito2["created_at"], str)
+        self.assertIsInstance(juanito2["number_rooms"], int)
+        self.assertIsInstance(juanito2["latitude"], float)
+
+
+class TestFib(unittest.TestCase):
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
 
     @classmethod
     def setUpClass(cls):
-        """set up for test"""
-        cls.place = Place()
-        cls.place.city_id = "1234-abcd"
-        cls.place.user_id = "4321-dcba"
-        cls.place.name = "el lugar de tus sueños"
-        cls.place.description = "dream"
-        cls.place.number_rooms = 1000000
-        cls.place.number_bathrooms = 1
-        cls.place.max_guest = 607360
-        cls.place.price_by_night = 10
-        cls.place.latitude = 160.0
-        cls.place.longitude = 120.0
-        cls.place.amenity_ids = ["1324-wwfqrqrv"]
+        pass
 
     @classmethod
-    def teardown(cls):
-        """at the end of the test this will tear it down"""
-        del cls.place
-
-    def tearDown(self):
-        """teardown"""
-        try:
-            os.remove("file.json")
-        except Exception:
-            pass
-
-    def test_pep8_Place(self):
-        """Tests pep8 style"""
-        style = pep8.StyleGuide(quiet=True)
-        p = style.check_files(['models/place.py'])
-        self.assertEqual(p.total_errors, 0, "fix pep8")
-
-    def test_checking_for_docstring_Place(self):
-        """checking for docstrings"""
-        self.assertIsNotNone(Place.__doc__)
-
-    def test_attributes_Place(self):
-        """chekcing if amenity have attributes"""
-        self.assertTrue('id' in self.place.__dict__)
-        self.assertTrue('created_at' in self.place.__dict__)
-        self.assertTrue('updated_at' in self.place.__dict__)
-        self.assertTrue('city_id' in self.place.__dict__)
-        self.assertTrue('user_id' in self.place.__dict__)
-        self.assertTrue('name' in self.place.__dict__)
-        self.assertTrue('description' in self.place.__dict__)
-        self.assertTrue('number_rooms' in self.place.__dict__)
-        self.assertTrue('number_bathrooms' in self.place.__dict__)
-        self.assertTrue('max_guest' in self.place.__dict__)
-        self.assertTrue('price_by_night' in self.place.__dict__)
-        self.assertTrue('latitude' in self.place.__dict__)
-        self.assertTrue('longitude' in self.place.__dict__)
-        self.assertTrue('amenity_ids' in self.place.__dict__)
-
-    def test_is_subclass_Place(self):
-        """test if Place is subclass of Basemodel"""
-        self.assertTrue(issubclass(self.place.__class__, BaseModel), True)
-
-    def test_attribute_types_Place(self):
-        """test attribute type for Place"""
-        self.assertEqual(type(self.place.city_id), str)
-        self.assertEqual(type(self.place.user_id), str)
-        self.assertEqual(type(self.place.name), str)
-        self.assertEqual(type(self.place.description), str)
-        self.assertEqual(type(self.place.number_rooms), int)
-        self.assertEqual(type(self.place.number_bathrooms), int)
-        self.assertEqual(type(self.place.max_guest), int)
-        self.assertEqual(type(self.place.price_by_night), int)
-        self.assertEqual(type(self.place.latitude), float)
-        self.assertEqual(type(self.place.longitude), float)
-        self.assertEqual(type(self.place.amenity_ids), list)
-
-    def test_save_Place(self):
-        """test if the save works"""
-        self.place.save()
-        self.assertNotEqual(self.place.created_at, self.place.updated_at)
-
-    def test_to_dict_Place(self):
-        """test if dictionary works"""
-        self.assertEqual('to_dict' in dir(self.place), True)
+    def tearDownClass(cls):
+        pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
